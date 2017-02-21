@@ -26,6 +26,10 @@
 		04171EE51E5CC06E00E1C640 /* FutureResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04171ED61E5CC06100E1C640 /* FutureResult.swift */; };
 		04171EE61E5CC06E00E1C640 /* ExecutionContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04171ED41E5CC06100E1C640 /* ExecutionContext.swift */; };
 		04171EE71E5CC06E00E1C640 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04171ED71E5CC06100E1C640 /* Observable.swift */; };
+		04171EE91E5CDC9500E1C640 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04171EE81E5CDC9500E1C640 /* Mutex.swift */; };
+		04171EEA1E5CDC9500E1C640 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04171EE81E5CDC9500E1C640 /* Mutex.swift */; };
+		04171EEB1E5CDC9500E1C640 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04171EE81E5CDC9500E1C640 /* Mutex.swift */; };
+		04171EEC1E5CDC9500E1C640 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04171EE81E5CDC9500E1C640 /* Mutex.swift */; };
 		52D6D9871BEFF229002C0205 /* Eventually.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Eventually.framework */; };
 		DD7502881C68FEDE006590AF /* Eventually.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6DA0F1BF000BD002C0205 /* Eventually.framework */; };
 		DD7502921C690C7A006590AF /* Eventually.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D9F01BEFFFBE002C0205 /* Eventually.framework */; };
@@ -61,6 +65,7 @@
 		04171ED51E5CC06100E1C640 /* Future.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Future.swift; sourceTree = "<group>"; };
 		04171ED61E5CC06100E1C640 /* FutureResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FutureResult.swift; sourceTree = "<group>"; };
 		04171ED71E5CC06100E1C640 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		04171EE81E5CDC9500E1C640 /* Mutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mutex.swift; sourceTree = "<group>"; };
 		52D6D97C1BEFF229002C0205 /* Eventually.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Eventually.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9861BEFF229002C0205 /* Eventually-iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Eventually-iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9E21BEFFF6E002C0205 /* Eventually.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Eventually.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,6 +140,7 @@
 				04171ED61E5CC06100E1C640 /* FutureResult.swift */,
 				04171ED41E5CC06100E1C640 /* ExecutionContext.swift */,
 				04171ED71E5CC06100E1C640 /* Observable.swift */,
+				04171EE81E5CDC9500E1C640 /* Mutex.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -476,6 +482,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04171EE91E5CDC9500E1C640 /* Mutex.swift in Sources */,
 				04171EDB1E5CC06100E1C640 /* Observable.swift in Sources */,
 				04171ED91E5CC06100E1C640 /* Future.swift in Sources */,
 				04171EDA1E5CC06100E1C640 /* FutureResult.swift in Sources */,
@@ -495,6 +502,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04171EEB1E5CDC9500E1C640 /* Mutex.swift in Sources */,
 				04171EE31E5CC06D00E1C640 /* Observable.swift in Sources */,
 				04171EE01E5CC06D00E1C640 /* Future.swift in Sources */,
 				04171EE21E5CC06D00E1C640 /* ExecutionContext.swift in Sources */,
@@ -506,6 +514,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04171EEC1E5CDC9500E1C640 /* Mutex.swift in Sources */,
 				04171EDF1E5CC06D00E1C640 /* Observable.swift in Sources */,
 				04171EDC1E5CC06D00E1C640 /* Future.swift in Sources */,
 				04171EDE1E5CC06D00E1C640 /* ExecutionContext.swift in Sources */,
@@ -517,6 +526,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04171EEA1E5CDC9500E1C640 /* Mutex.swift in Sources */,
 				04171EE71E5CC06E00E1C640 /* Observable.swift in Sources */,
 				04171EE41E5CC06E00E1C640 /* Future.swift in Sources */,
 				04171EE61E5CC06E00E1C640 /* ExecutionContext.swift in Sources */,

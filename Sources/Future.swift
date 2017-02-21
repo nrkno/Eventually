@@ -15,7 +15,7 @@ public final class Future<Value> {
     public var isCompleted: Bool { return value != nil }
 
     private var observers: [Observable<Value>] = []
-    private let observationQueue = DispatchQueue(label: "no.nrk.Eventually.observations", qos: .background)
+    private let mutex = Mutex()
 
     /// Creates a new future, call the provided resolver when the (async) task completes with
     /// either an FutureResult.success or FutureResult.failure in the case of errors
@@ -60,9 +60,9 @@ public final class Future<Value> {
     public func then(on context: ExecutionContext = .main, _ completion: @escaping (FutureResult<Value>) -> Void) -> Future<Value> {
         let observable = Observable<Value>(context: context, observer: completion)
         if let value = self.value {
-            self.complete(with: value, observer: observable)
+            observable.call(value: value)
         } else {
-            observationQueue.async {
+            mutex.locked {
                 self.observers.append(observable)
             }
         }
@@ -136,16 +136,14 @@ public final class Future<Value> {
 
     private func complete(with value: FutureResult<Value>) {
         self.value = value
-        observationQueue.async {
-            var observers = Array(self.observers.reversed())
+        var observers = mutex.locked { () -> [Observable<Value>] in
+            let reversed = Array(self.observers.reversed())
             self.observers.removeAll()
-            while let observer = observers.popLast() {
-                self.complete(with: value, observer: observer)
-            }
+            return reversed
         }
-    }
 
-    private func complete(with value: FutureResult<Value>, observer: Observable<Value>) {
-        observer.call(value: value)
+        while let observer = observers.popLast() {
+            observer.call(value: value)
+        }
     }
 }
