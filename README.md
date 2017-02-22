@@ -1,4 +1,4 @@
-![Eventually logo](https://raw.githubusercontent.com/nrkno/Eventually/master/Assets/logo.png)
+![Eventually logo](/Assets/logo.png)
 
 # Eventually
 
