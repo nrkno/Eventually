@@ -134,6 +134,31 @@ public final class Future<Value> {
         }
     }
 
+    public func finally(on context: ExecutionContext = .main, _ completion: @escaping () -> Void) {
+        self.then(on: context) { result in
+            completion()
+        }
+    }
+
+    public static func all<T, U: Sequence>(_ futures: U) -> Future<[T]> where U.Iterator.Element == Future<T> {
+        return Future<[T]>(on: .background) { resolve in
+            let futures = Array(futures)
+            let mutex = Mutex()
+            var remaining = futures.count
+            for future in futures {
+                future.success(on: .background) { value in
+                    mutex.locked { remaining -= 1 }
+                    if remaining <= 0 {
+                        let values = futures.flatMap({ $0.value?.value })
+                        resolve(.success(values))
+                    }
+                }.failure(on: .background) { error in
+                    resolve(.failure(error))
+                }
+            }
+        }
+    }
+
     private func complete(with value: FutureResult<Value>) {
         self.value = value
         var observers = mutex.locked { () -> [Observable<Value>] in
@@ -145,5 +170,11 @@ public final class Future<Value> {
         while let observer = observers.popLast() {
             observer.call(value: value)
         }
+    }
+}
+
+extension Future: CustomStringConvertible {
+    public var description: String {
+        return "<\(type(of: self)) value: \(value)>"
     }
 }

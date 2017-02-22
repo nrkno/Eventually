@@ -155,17 +155,88 @@ class EventuallyTests: XCTestCase {
         waitForExpectations(timeout: 0.5, handler: nil)
     }
 
+    func testFinally() {
+        let wait = expectation(description: "async")
+
+        var thenCalled = false
+        successAsyncFuture().then({ result in
+            thenCalled = true
+        }).finally {
+            XCTAssertTrue(thenCalled)
+            wait.fulfill()
+        }
+
+        waitForExpectations(timeout: 0.5, handler: nil)
+    }
+
+    func testFinallyFailure() {
+        let wait = expectation(description: "async")
+
+        var thenCalled = false
+        failingFuture().failure({ _ in
+            thenCalled = true
+        }).finally {
+            XCTAssertTrue(thenCalled)
+            wait.fulfill()
+        }
+
+        waitForExpectations(timeout: 0.5, handler: nil)
+    }
+
+    func testAll() {
+        let wait = expectation(description: "async")
+
+        var count = 0
+        Future<Int>.all([
+            successAsyncFuture(value: 2).success({ _ in count += 1 }),
+            successAsyncFuture(value: 4).success({ _ in count += 1 }),
+            successAsyncFuture(value: 6).success({ _ in count += 1 }),
+        ]).success { values in
+            // all done
+            XCTAssertEqual(count, 3)
+            XCTAssertEqual(values, [2, 4, 6])
+            wait.fulfill()
+        }
+
+        waitForExpectations(timeout: 0.5, handler: nil)
+    }
+
+    func testAllFailure() {
+        let wait = expectation(description: "async")
+
+        var count = 0
+        func run() -> Future<Int> {
+            return Future { resolve in
+                DispatchQueue.global().async {
+                    count += 1
+                    resolve(.success(1))
+                }
+            }
+        }
+
+        Future<Int>.all([
+            run(),
+            failingFuture(),
+            run(),
+        ]).failure { error in
+            XCTAssertEqual(count, 2)
+            wait.fulfill()
+        }
+
+        waitForExpectations(timeout: 0.5)
+    }
+
     // MARK: - Helpers
 
-    func operation(completion: @escaping (Int) -> Void) {
+    func operation(value: Int = 42, completion: @escaping (Int) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(256)) {
-            completion(42)
+            completion(value)
         }
     }
 
-    func successAsyncFuture() -> Future<Int> {
+    func successAsyncFuture(value: Int = 42) -> Future<Int> {
         return Future { resolve in
-            self.operation(completion: { val in
+            self.operation(value: value, completion: { val in
                 resolve(.success(val))
             })
         }
