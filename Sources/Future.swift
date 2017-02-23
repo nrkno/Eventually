@@ -134,6 +134,15 @@ public final class Future<Value> {
         }
     }
 
+    /// Returns a Future of type `T` that returns when all the supplied Future of type `T` finishes, or if a
+    /// Future returns a failure
+    ///
+    /// - parameter futures: List of Futures of type `T`
+    ///
+    /// ```swift
+    /// Future<Int>.all([one(), two(), three()]).success { values in
+    ///     // values is an array containing the .success values from the one(), two(), three() futures
+    /// }
     public static func all<T, U: Sequence>(_ futures: U) -> Future<[T]> where U.Iterator.Element == Future<T> {
         return Future<[T]>(on: .background) { resolve in
             let futures = Array(futures)
