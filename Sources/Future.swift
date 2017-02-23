@@ -134,12 +134,6 @@ public final class Future<Value> {
         }
     }
 
-    public func finally(on context: ExecutionContext = .main, _ completion: @escaping () -> Void) {
-        self.then(on: context) { result in
-            completion()
-        }
-    }
-
     public static func all<T, U: Sequence>(_ futures: U) -> Future<[T]> where U.Iterator.Element == Future<T> {
         return Future<[T]>(on: .background) { resolve in
             let futures = Array(futures)

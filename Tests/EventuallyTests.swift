@@ -155,34 +155,6 @@ class EventuallyTests: XCTestCase {
         waitForExpectations(timeout: 0.5, handler: nil)
     }
 
-    func testFinally() {
-        let wait = expectation(description: "async")
-
-        var thenCalled = false
-        successAsyncFuture().then({ result in
-            thenCalled = true
-        }).finally {
-            XCTAssertTrue(thenCalled)
-            wait.fulfill()
-        }
-
-        waitForExpectations(timeout: 0.5, handler: nil)
-    }
-
-    func testFinallyFailure() {
-        let wait = expectation(description: "async")
-
-        var thenCalled = false
-        failingFuture().failure({ _ in
-            thenCalled = true
-        }).finally {
-            XCTAssertTrue(thenCalled)
-            wait.fulfill()
-        }
-
-        waitForExpectations(timeout: 0.5, handler: nil)
-    }
-
     func testAll() {
         let wait = expectation(description: "async")
 
