@@ -2,11 +2,11 @@
 
 # Eventually
 
-A Swift library implementing a simple Future (also known as Promise), which can be used to model and transform asynchronous results.
+A Swift implementation of a [Future](https://en.wikipedia.org/wiki/Futures_and_promises), which can be used to model and transform asynchronous results while making it easy to bounce results between dispatch queues
 
 ## Usage
 
-Futures in Eventually can be used to wrap existing asynchronous APIs in a Future and to create new APIs that return a Future
+Futures in Eventually can be used to wrap existing APIs, or to create new APIs using Futures
 
 ```Swift
 func operation(completion: (Int) -> Void) {
@@ -29,7 +29,7 @@ Future<Int> { resolve in
 }
 ```
 
-When initializing a Future the closure receives a "resolver", this resolver is simply a closure that you will call with a [FutureResult](/Sources/FutureResult.swift), a Result-like enum type that can be either `.success` or `.failure`. 
+When initializing a Future the closure receives a "resolver", this resolver is simply a closure that you will call with a [FutureResult](/Sources/FutureResult.swift), a Result enum type which can be either `.success` or `.failure`.
 
 There's also a couple of short-hand methods available
 
@@ -46,7 +46,7 @@ calculateAge().success { (value: Int) in
 
 ### Mapping values
 
-With Eventually it is possible to `map()` one Future type to another, this allows us to compose and transform things easily
+With Eventually it is possible to `map()` one Future type to another, allowing us to compose and transform things easily
 
 ```swift
 calculateAge().map({ (value: Int) -> String in
@@ -82,7 +82,9 @@ Future<String>(on: .background) { resolve
 
 ## Installation
 
-Installation is supported for CocoaPods, Carthage, and the Swift Package Manager. For installation methods, please refer to that systems documentation. Eventually has no dependencies outside of GCD.
+Eventually is available as a CocoaPod (`pod 'Eventually'`) and the Swift Package Manager. Framework installation is also available by dragging the Eventually.xcodeproj into your project or via Carthage.
+
+Eventually has no dependencies outside of Foundation and Dispatch (GCD)
 
 ## License
 
