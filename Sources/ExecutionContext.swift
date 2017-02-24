@@ -15,7 +15,7 @@ public enum ExecutionContext {
     case global(DispatchQoS.QoSClass)
     case queue(DispatchQueue)
 
-    var queue: DispatchQueue {
+    internal var queue: DispatchQueue {
         switch self {
         case .main:
             return DispatchQueue.main
@@ -28,7 +28,7 @@ public enum ExecutionContext {
         }
     }
 
-    func apply(execute: @escaping () -> Void) {
+    internal func apply(execute: @escaping () -> Void) {
         switch (self, Thread.isMainThread) {
         case (.main, true):
             execute()
