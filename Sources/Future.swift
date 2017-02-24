@@ -8,6 +8,8 @@
 
 import Foundation
 
+/// A Future represent a value that has not yet been calculated, using this class you
+/// observe and transform such a value when it has been materialized with a value
 public final class Future<Value> {
     public typealias Resolver = (@escaping (FutureResult<Value>) -> Void) -> Void
 
@@ -178,6 +180,7 @@ public final class Future<Value> {
     }
 }
 
+/// :nodoc:
 extension Future: CustomStringConvertible {
     public var description: String {
         return "<\(type(of: self)) result: \(result)>"

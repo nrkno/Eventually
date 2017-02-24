@@ -9,10 +9,15 @@
 import Foundation
 import Dispatch
 
+/// The GCD queue context in which a given Future operation should be performed
 public enum ExecutionContext {
+    /// The main queue, if already on the main queue the task is run immediately
     case main
+    /// The background QoS queue
     case background
+    /// A global queue with the given QoSClass
     case global(DispatchQoS.QoSClass)
+    /// A queue of your choice
     case queue(DispatchQueue)
 
     internal var queue: DispatchQueue {
