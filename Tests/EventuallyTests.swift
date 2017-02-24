@@ -16,7 +16,7 @@ class EventuallyTests: XCTestCase {
         }
 
         XCTAssert(stringFuture.isCompleted)
-        switch stringFuture.value! {
+        switch stringFuture.result! {
         case .success(let value):
             XCTAssertEqual(value, "hello")
         case .failure:

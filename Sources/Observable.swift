@@ -17,9 +17,9 @@ internal final class Observable<Value> {
         self.observer = observer
     }
 
-    func call(value: FutureResult<Value>) {
+    func call(result: FutureResult<Value>) {
         context.apply {
-            self.observer(value)
+            self.observer(result)
         }
     }
 }

@@ -11,8 +11,8 @@ import Foundation
 public final class Future<Value> {
     public typealias Resolver = (@escaping (FutureResult<Value>) -> Void) -> Void
 
-    public var value: FutureResult<Value>?
-    public var isCompleted: Bool { return value != nil }
+    public var result: FutureResult<Value>?
+    public var isCompleted: Bool { return result != nil }
 
     private var observers: [Observable<Value>] = []
     private let mutex = Mutex()
@@ -33,7 +33,7 @@ public final class Future<Value> {
     ///     }
     /// }
     public init(on context: ExecutionContext = .main, resolver: @escaping Resolver) {
-        self.value = nil
+        self.result = nil
 
         context.apply {
             resolver { val in
@@ -59,13 +59,15 @@ public final class Future<Value> {
     @discardableResult
     public func then(on context: ExecutionContext = .main, _ completion: @escaping (FutureResult<Value>) -> Void) -> Future<Value> {
         let observable = Observable<Value>(context: context, observer: completion)
-        if let value = self.value {
-            observable.call(value: value)
+
+        if let result = self.result {
+            observable.call(result: result)
         } else {
             mutex.locked {
                 self.observers.append(observable)
             }
         }
+
         return self
     }
 
@@ -152,7 +154,7 @@ public final class Future<Value> {
                 future.success(on: .background) { value in
                     mutex.locked { remaining -= 1 }
                     if remaining <= 0 {
-                        let values = futures.flatMap({ $0.value?.value })
+                        let values = futures.flatMap({ $0.result?.value })
                         resolve(.success(values))
                     }
                 }.failure(on: .background) { error in
@@ -162,8 +164,8 @@ public final class Future<Value> {
         }
     }
 
-    private func complete(with value: FutureResult<Value>) {
-        self.value = value
+    private func complete(with result: FutureResult<Value>) {
+        self.result = result
         var observers = mutex.locked { () -> [Observable<Value>] in
             let reversed = Array(self.observers.reversed())
             self.observers.removeAll()
@@ -171,13 +173,13 @@ public final class Future<Value> {
         }
 
         while let observer = observers.popLast() {
-            observer.call(value: value)
+            observer.call(result: result)
         }
     }
 }
 
 extension Future: CustomStringConvertible {
     public var description: String {
-        return "<\(type(of: self)) value: \(value)>"
+        return "<\(type(of: self)) result: \(result)>"
     }
 }
