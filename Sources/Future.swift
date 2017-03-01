@@ -11,8 +11,6 @@ import Foundation
 /// A Future represent a value that has not yet been calculated, using this class you
 /// observe and transform such a value when it has been materialized with a value
 public final class Future<Value> {
-    public typealias Resolver = (@escaping (FutureResult<Value>) -> Void) -> Void
-
     public var result: FutureResult<Value>?
     public var isCompleted: Bool { return result != nil }
 
@@ -31,16 +29,17 @@ public final class Future<Value> {
     /// ```swift
     /// Future<Int> { resolve in
     ///     someAsyncFunc { value in
-    ///         resolve(.success(value))
+    ///         resolve.success(value)
     ///     }
     /// }
-    public init(on context: ExecutionContext = .main, resolver: @escaping Resolver) {
+    public init(on context: ExecutionContext = .main, resolver: @escaping (Resolve<Value>) -> Void) {
         self.result = nil
 
         context.apply {
-            resolver { val in
-                self.complete(with: val)
-            }
+            let resolve = Resolve(closure: { result in
+                self.complete(with: result)
+            })
+            resolver(resolve)
         }
     }
 
@@ -86,9 +85,9 @@ public final class Future<Value> {
                 switch result {
                 case .success(let value):
                     completion(value)
-                    resolve(.success(value))
+                    resolve.success(value)
                 case .failure(let error):
-                    resolve(.failure(error))
+                    resolve.failure(error)
                 }
             }
         }
@@ -106,10 +105,10 @@ public final class Future<Value> {
             self.then(on: context) { result in
                 switch result {
                 case .success(let value):
-                    resolve(.success(value))
+                    resolve.success(value)
                 case .failure(let error):
                     completion(error)
-                    resolve(.failure(error))
+                    resolve.failure(error)
                 }
             }
         }
@@ -130,9 +129,9 @@ public final class Future<Value> {
             self.then(on: context) { result in
                 switch result {
                 case .success(let value):
-                    resolve(.success(transform(value)))
+                    resolve.success(transform(value))
                 case .failure(let error):
-                    resolve(.failure(error))
+                    resolve.failure(error)
                 }
             }
         }
@@ -157,10 +156,10 @@ public final class Future<Value> {
                     mutex.locked { remaining -= 1 }
                     if remaining <= 0 {
                         let values = futures.flatMap({ $0.result?.value })
-                        resolve(.success(values))
+                        resolve.success(values)
                     }
                 }.failure(on: .background) { error in
-                    resolve(.failure(error))
+                    resolve.failure(error)
                 }
             }
         }

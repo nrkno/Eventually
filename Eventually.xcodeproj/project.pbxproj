@@ -31,6 +31,10 @@
 		04171EEB1E5CDC9500E1C640 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04171EE81E5CDC9500E1C640 /* Mutex.swift */; };
 		04171EEC1E5CDC9500E1C640 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04171EE81E5CDC9500E1C640 /* Mutex.swift */; };
 		52D6D9871BEFF229002C0205 /* Eventually.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Eventually.framework */; };
+		D9D9DB8C1E66B2FF0033406B /* Resolve.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D9DB8B1E66B2FF0033406B /* Resolve.swift */; };
+		D9D9DB8D1E66B2FF0033406B /* Resolve.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D9DB8B1E66B2FF0033406B /* Resolve.swift */; };
+		D9D9DB8E1E66B2FF0033406B /* Resolve.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D9DB8B1E66B2FF0033406B /* Resolve.swift */; };
+		D9D9DB8F1E66B2FF0033406B /* Resolve.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D9DB8B1E66B2FF0033406B /* Resolve.swift */; };
 		DD7502881C68FEDE006590AF /* Eventually.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6DA0F1BF000BD002C0205 /* Eventually.framework */; };
 		DD7502921C690C7A006590AF /* Eventually.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D9F01BEFFFBE002C0205 /* Eventually.framework */; };
 /* End PBXBuildFile section */
@@ -73,6 +77,7 @@
 		52D6DA0F1BF000BD002C0205 /* Eventually.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Eventually.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD2FAA261CD0B6D800659CF4 /* Eventually.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Eventually.plist; sourceTree = "<group>"; };
 		AD2FAA281CD0B6E100659CF4 /* EventuallyTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EventuallyTests.plist; sourceTree = "<group>"; };
+		D9D9DB8B1E66B2FF0033406B /* Resolve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resolve.swift; sourceTree = "<group>"; };
 		DD75027A1C68FCFC006590AF /* Eventually-macOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Eventually-macOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD75028D1C690C7A006590AF /* Eventually-tvOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Eventually-tvOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -139,6 +144,7 @@
 				04171ED51E5CC06100E1C640 /* Future.swift */,
 				04171ED61E5CC06100E1C640 /* FutureResult.swift */,
 				04171ED41E5CC06100E1C640 /* ExecutionContext.swift */,
+				D9D9DB8B1E66B2FF0033406B /* Resolve.swift */,
 				04171ED71E5CC06100E1C640 /* Observable.swift */,
 				04171EE81E5CDC9500E1C640 /* Mutex.swift */,
 			);
@@ -482,6 +488,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9D9DB8C1E66B2FF0033406B /* Resolve.swift in Sources */,
 				04171EE91E5CDC9500E1C640 /* Mutex.swift in Sources */,
 				04171EDB1E5CC06100E1C640 /* Observable.swift in Sources */,
 				04171ED91E5CC06100E1C640 /* Future.swift in Sources */,
@@ -502,6 +509,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9D9DB8E1E66B2FF0033406B /* Resolve.swift in Sources */,
 				04171EEB1E5CDC9500E1C640 /* Mutex.swift in Sources */,
 				04171EE31E5CC06D00E1C640 /* Observable.swift in Sources */,
 				04171EE01E5CC06D00E1C640 /* Future.swift in Sources */,
@@ -514,6 +522,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9D9DB8F1E66B2FF0033406B /* Resolve.swift in Sources */,
 				04171EEC1E5CDC9500E1C640 /* Mutex.swift in Sources */,
 				04171EDF1E5CC06D00E1C640 /* Observable.swift in Sources */,
 				04171EDC1E5CC06D00E1C640 /* Future.swift in Sources */,
@@ -526,6 +535,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9D9DB8D1E66B2FF0033406B /* Resolve.swift in Sources */,
 				04171EEA1E5CDC9500E1C640 /* Mutex.swift in Sources */,
 				04171EE71E5CC06E00E1C640 /* Observable.swift in Sources */,
 				04171EE41E5CC06E00E1C640 /* Future.swift in Sources */,

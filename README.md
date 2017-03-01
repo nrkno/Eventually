@@ -17,7 +17,7 @@ func operation(completion: (Int) -> Void) {
 
 Future<Int> { resolve in
     operation { value
-        resolve(.success(value))
+        resolve.success(value)
     }
 }.then { result in
     switch result {
@@ -65,7 +65,7 @@ Most of the methods operating on a Future accepts an [EvaluationContext](/Source
 ```swift
 Future<String>(on: .background) { resolve
     // Performed on a background queue (eg `DispatchQueue.global(qos: .background)`)
-    resolve(.success("hello"))
+    resolve.success("hello"))
 }.map(on: .queue(someCustomQueue)) { value in
     // will be called on the supplied DispatchQueue (`someCustomQueue`)
     return value + " world"
