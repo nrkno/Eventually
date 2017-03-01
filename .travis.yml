@@ -1,5 +1,7 @@
 osx_image: xcode8.2
 language: objective-c
-script:
-- xcodebuild clean build -project Eventually.xcodeproj -scheme "Eventually-iOS" -sdk iphonesimulator
-- xcodebuild test -project Eventually.xcodeproj -scheme "Eventually-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest'
+xcode_project: Eventually.xcodeproj
+xcode_scheme: Eventually-iOS
+# script:
+# - xcodebuild clean build -project Eventually.xcodeproj -scheme "Eventually-iOS" -sdk iphonesimulator
+# - xcodebuild test -project Eventually.xcodeproj -scheme "Eventually-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest'
