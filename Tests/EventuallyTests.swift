@@ -12,7 +12,7 @@ import Eventually
 class EventuallyTests: XCTestCase {
     func testBasics() {
         let stringFuture = Future<String> { resolve in
-            resolve(.success("hello"))
+            resolve.success("hello")
         }
 
         XCTAssert(stringFuture.isCompleted)
@@ -96,7 +96,7 @@ class EventuallyTests: XCTestCase {
         let future = Future<Int>(on: .background) { resolve in
             XCTAssertFalse(Thread.isMainThread)
             self.operation(completion: { val in
-                resolve(.success(val))
+                resolve.success(val)
             })
         }
 
@@ -113,7 +113,7 @@ class EventuallyTests: XCTestCase {
         let future = Future<Int>(on: .main) { resolve in
             XCTAssertTrue(Thread.isMainThread)
             self.operation(completion: { val in
-                resolve(.success(val))
+                resolve.success(val)
             })
         }
 
@@ -181,7 +181,7 @@ class EventuallyTests: XCTestCase {
             return Future { resolve in
                 DispatchQueue.global().async {
                     count += 1
-                    resolve(.success(1))
+                    resolve.success(1)
                 }
             }
         }
@@ -209,14 +209,14 @@ class EventuallyTests: XCTestCase {
     func successAsyncFuture(value: Int = 42) -> Future<Int> {
         return Future { resolve in
             self.operation(value: value, completion: { val in
-                resolve(.success(val))
+                resolve.success(val)
             })
         }
     }
 
     func successFuture() -> Future<Int> {
         return Future { resolve in
-            resolve(.success(42))
+            resolve.success(42)
         }
     }
 
@@ -226,14 +226,14 @@ class EventuallyTests: XCTestCase {
 
     func failingFuture() -> Future<Int> {
         return Future<Int> { resolve in
-            resolve(.failure(TestError.fail))
+            resolve.failure(TestError.fail)
         }
     }
 
     func failingAsyncFuture() -> Future<Int> {
         return Future<Int> { resolve in
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(256)) {
-                resolve(.failure(TestError.fail))
+                resolve.failure(TestError.fail)
             }
         }
     }
