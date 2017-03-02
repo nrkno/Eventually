@@ -11,8 +11,7 @@ dist/*
 .DS_Store
 profile
 
-#xcode4 cruft
 *.xcodeproj/project.xcworkspace/*
-*.xcodeproj/xcuserdata/*
+*/xcuserdata/*
 
 docs/*
