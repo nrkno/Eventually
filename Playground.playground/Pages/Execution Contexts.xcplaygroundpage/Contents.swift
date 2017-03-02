@@ -28,4 +28,4 @@ mapped.success(on: .main) { value in
         print("back on main thread the value is", value)
 }
 
-//: [Previous: Execution Contexts](@next)
+//: [Previous: Errors](@previous)

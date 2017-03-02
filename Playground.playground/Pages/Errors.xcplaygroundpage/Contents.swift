@@ -3,7 +3,7 @@ import Eventually
 import XCPlayground
 XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
 
-//: ## error handling
+//: ## Error handling
 
 enum Trouble: Error {
     case fail
