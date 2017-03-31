@@ -16,6 +16,7 @@ public final class Future<Value> {
 
     private var observers: [Observable<Value>] = []
     private let mutex = Mutex()
+    private let resolveContext: ExecutionContext
 
     /// Creates a new future, call the provided resolver when the (async) task completes with
     /// either an FutureResult.success or FutureResult.failure in the case of errors
@@ -34,12 +35,45 @@ public final class Future<Value> {
     /// }
     public init(on context: ExecutionContext = .main, resolver: @escaping (Resolve<Value>) -> Void) {
         self.result = nil
+        self.resolveContext = context
 
         context.apply {
             let resolve = Resolve(closure: { result in
                 self.complete(with: result)
             })
             resolver(resolve)
+        }
+    }
+
+    /// Creates a new Future that can be resolve at a later time
+    ///
+    /// - returns: a Future which can be passed around, mapped to another type or materialize its value once
+    ///            the value is available
+    /// - parameter on: The ExecutionContext on which this Future should be resolved. Defaults to main queue
+    /// ```swift
+    /// let future = Future<Int>()
+    /// ...
+    /// future.resolve(success: value)
+    public init(on context: ExecutionContext = .main) {
+        self.result = nil
+        self.resolveContext = context
+    }
+
+    /// Resolve the future with a successful value
+    ///
+    /// - parameter success: The value to complete the Future with
+    public func resolve(success value: Value)  {
+        self.resolveContext.apply {
+            self.complete(with: .success(value))
+        }
+    }
+
+    /// Resolve the future with an error value
+    ///
+    /// - parameter error: The error value to complete the Future with
+    public func resolve(error: Error) {
+        self.resolveContext.apply {
+            self.complete(with: .failure(error))
         }
     }
 

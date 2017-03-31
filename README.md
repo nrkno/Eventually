@@ -44,6 +44,16 @@ calculateAge().success { (value: Int) in
 }
 ```
 
+A non-closure based API for resolving futures is also available
+
+```swift
+let future = Future<Int>
+future.success { value in
+    ...
+}
+future.resolve(success: age)
+```
+
 ### Mapping values
 
 With Eventually it is possible to `map()` one Future type to another, allowing us to compose and transform things easily

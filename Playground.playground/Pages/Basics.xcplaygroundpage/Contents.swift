@@ -72,5 +72,15 @@ asyncFuture
         print("transformed future is ", value)
 }
 
+//: ### Alternative API
+
+//: If it suits you implementation better you can use a non-closure based API to resolve Futures
+
+let future = Future<Int>()
+future.success { value in
+    print(value)
+}
+future.resolve(success: 42)
+
 
 //: [Next: Errors](@next)

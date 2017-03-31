@@ -198,6 +198,40 @@ class EventuallyTests: XCTestCase {
         waitForExpectations(timeout: 0.5)
     }
 
+    func testNonClosureResolveSuccess() {
+        let future = Future<Int>()
+
+        let wait = expectation(description: "async")
+        future.success { value in
+            XCTAssertEqual(value, 42)
+            wait.fulfill()
+        }
+
+        future.resolve(success: 42)
+        waitForExpectations(timeout: 0.1, handler: nil)
+    }
+
+    func testNonClosureResolveFailure() {
+        let future = Future<Int>()
+
+        let wait = expectation(description: "async")
+        future.failure { error in
+            XCTAssert(error is TestError)
+            wait.fulfill()
+        }
+
+        future.resolve(error: TestError.fail)
+        waitForExpectations(timeout: 0.1, handler: nil)
+    }
+
+    func testFuturesCanOnlyBeResolvedOnce() {
+        let future = Future<Int>()
+        future.resolve(success: 42)
+        XCTAssertEqual(future.result!.value, 42)
+        future.resolve(success: 666)
+        XCTAssertEqual(future.result!.value, 42)
+    }
+
     // MARK: - Helpers
 
     func operation(value: Int = 42, completion: @escaping (Int) -> Void) {
