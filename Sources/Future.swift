@@ -166,7 +166,10 @@ public final class Future<Value> {
     }
 
     private func complete(with result: FutureResult<Value>) {
+        guard !isCompleted else { return }
+
         self.result = result
+
         var observers = mutex.locked { () -> [Observable<Value>] in
             let reversed = Array(self.observers.reversed())
             self.observers.removeAll()
