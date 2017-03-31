@@ -182,6 +182,6 @@ public final class Future<Value> {
 /// :nodoc:
 extension Future: CustomStringConvertible {
     public var description: String {
-        return "<\(type(of: self)) result: \(result)>"
+        return "<\(type(of: self)) result: \(String(describing: result))>"
     }
 }

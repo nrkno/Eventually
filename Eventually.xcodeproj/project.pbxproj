@@ -31,7 +31,6 @@
 		04171EEB1E5CDC9500E1C640 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04171EE81E5CDC9500E1C640 /* Mutex.swift */; };
 		04171EEC1E5CDC9500E1C640 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04171EE81E5CDC9500E1C640 /* Mutex.swift */; };
 		52D6D9871BEFF229002C0205 /* Eventually.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Eventually.framework */; };
-		D9ADA0201E694B0E003C91BD /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = D9ADA01F1E694B0E003C91BD /* README.md */; };
 		D9D9DB8C1E66B2FF0033406B /* Resolve.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D9DB8B1E66B2FF0033406B /* Resolve.swift */; };
 		D9D9DB8D1E66B2FF0033406B /* Resolve.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D9DB8B1E66B2FF0033406B /* Resolve.swift */; };
 		D9D9DB8E1E66B2FF0033406B /* Resolve.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D9DB8B1E66B2FF0033406B /* Resolve.swift */; };
@@ -494,7 +493,6 @@
 				D9D9DB8C1E66B2FF0033406B /* Resolve.swift in Sources */,
 				04171EE91E5CDC9500E1C640 /* Mutex.swift in Sources */,
 				04171EDB1E5CC06100E1C640 /* Observable.swift in Sources */,
-				D9ADA0201E694B0E003C91BD /* README.md in Sources */,
 				04171ED91E5CC06100E1C640 /* Future.swift in Sources */,
 				04171EDA1E5CC06100E1C640 /* FutureResult.swift in Sources */,
 				04171ED81E5CC06100E1C640 /* ExecutionContext.swift in Sources */,
