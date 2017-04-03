@@ -20,16 +20,16 @@ extension Future {
     /// }).success { print($0) }
     @discardableResult
     public func map<U>(on context: ExecutionContext = .main, _ transform: @escaping (Value) -> U) -> Future<U> {
-        return Future<U> { resolve in
-            self.then(on: context) { result in
-                switch result {
-                case .success(let value):
-                    resolve.success(transform(value))
-                case .failure(let error):
-                    resolve.failure(error)
-                }
+        let mapped = Future<U>()
+        self.then(on: context) { result in
+            switch result {
+            case .success(let value):
+                mapped.resolve(success: transform(value))
+            case .failure(let error):
+                mapped.resolve(error: error)
             }
         }
+        return mapped
     }
 
     /// Combines the successful result of one future with something that takes the successful result as a
@@ -65,21 +65,21 @@ extension Future {
     ///     // values is an array containing the .success values from the one(), two(), three() futures
     /// }
     public static func all<T, U: Sequence>(_ futures: U) -> Future<[T]> where U.Iterator.Element == Future<T> {
-        return Future<[T]>(on: .background) { resolve in
-            let futures = Array(futures)
-            let mutex = Mutex()
-            var remaining = futures.count
-            for future in futures {
-                future.success(on: .background) { value in
-                    mutex.locked { remaining -= 1 }
-                    if remaining <= 0 {
-                        let values = futures.flatMap({ $0.result?.value })
-                        resolve.success(values)
-                    }
-                    }.failure(on: .background) { error in
-                        resolve.failure(error)
+        let allFuture = Future<[T]>(on: .background)
+        let futures = Array(futures)
+        let mutex = Mutex()
+        var remaining = futures.count
+        for future in futures {
+            future.success(on: .background) { value in
+                mutex.locked { remaining -= 1 }
+                if remaining <= 0 {
+                    let values = futures.flatMap({ $0.result?.value })
+                    allFuture.resolve(success: values)
                 }
+                }.failure(on: .background) { error in
+                    allFuture.resolve(error: error)
             }
         }
+        return allFuture
     }
 }
