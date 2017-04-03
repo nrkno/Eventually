@@ -68,6 +68,20 @@ public final class Future<Value> {
         }
     }
 
+    /// Attempts to resolve the future, turning any thrown errors into a failing future
+    ///
+    /// - parameter try: Closure to evaluate for a value, if an error is thrown the future is resolve as a failure
+    public func resolve(try closure: @escaping () throws -> Value) {
+        self.resolveContext.apply {
+            do {
+                let value = try closure()
+                self.complete(with: .success(value))
+            } catch {
+                self.complete(with: .failure(error))
+            }
+        }
+    }
+
     /// Resolve the future with an error value
     ///
     /// - parameter error: The error value to complete the Future with

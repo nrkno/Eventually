@@ -232,6 +232,31 @@ class EventuallyTests: XCTestCase {
         XCTAssertEqual(future.result!.value, 42)
     }
 
+    func testThrowingFuture() {
+        let wait1 = expectation(description: "async")
+        let successFuture = Future<Int>()
+        successFuture.success { value in
+            XCTAssertEqual(value, 42)
+            wait1.fulfill()
+        }
+        successFuture.resolve(try: {
+            return 42
+        })
+
+        let wait2 = expectation(description: "async2")
+        let failingFuture = Future<Int>()
+        failingFuture.failure { error in
+            XCTAssert(failingFuture.result!.error is TestError)
+            XCTAssertEqual(failingFuture.result!.error as! TestError, TestError.fail)
+            wait2.fulfill()
+        }
+        failingFuture.resolve(try: {
+            throw TestError.fail
+        })
+
+        waitForExpectations(timeout: 0.1, handler: nil)
+    }
+
     // MARK: - Helpers
 
     func operation(value: Int = 42, completion: @escaping (Int) -> Void) {
