@@ -40,13 +40,7 @@ extension Future {
         then { result in
             switch result {
             case .success(let value):
-                other(value)
-                    .success { value in
-                        final.resolve(success: value)
-                    }
-                    .failure { error in
-                        final.resolve(error: error)
-                }
+                other(value) |> final
             case .failure(let error):
                 final.resolve(error: error)
             }
@@ -81,5 +75,15 @@ extension Future {
             }
         }
         return allFuture
+    }
+}
+
+infix operator |>
+/// Pipes the result of the left hand side Future into resolving the right hand side Future
+internal func |> <U>(left: Future<U>, right: Future<U>) {
+    left.success { value in
+        right.resolve(success: value)
+    }.failure { error in
+        right.resolve(error: error)
     }
 }
