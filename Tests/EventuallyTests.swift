@@ -257,6 +257,55 @@ class EventuallyTests: XCTestCase {
         waitForExpectations(timeout: 0.1, handler: nil)
     }
 
+    func testCombine() {
+        func gen(shouldFail: Bool = false) -> Future<Int> {
+            let future = Future<Int>()
+            if !shouldFail {
+                future.resolve(success: 42)
+            } else {
+                future.resolve(error: TestError.fail)
+            }
+
+            return future
+        }
+        func stringy(value: Int) -> Future<String> {
+            return Future(on: .background) { resolve in
+                resolve.success("value is \(value)")
+            }
+        }
+        func stringyFail(value: Int) -> Future<String> {
+            return Future(on: .background) { resolve in
+                resolve.failure(TestError.fail2)
+            }
+        }
+
+        let wait1 = expectation(description: "async")
+        gen().combine(with: stringy).success { value in
+            XCTAssertEqual("value is 42", value)
+            wait1.fulfill()
+        }
+
+        let wait2 = expectation(description: "async")
+        gen(shouldFail: true).combine(with: stringy).success { value in
+            XCTFail()
+        }.failure { error in
+            XCTAssert(error is TestError)
+            XCTAssertEqual(error as! TestError, TestError.fail)
+            wait2.fulfill()
+        }
+
+        let wait3 = expectation(description: "async")
+        gen().combine(with: stringyFail).success { value in
+            XCTFail()
+        }.failure { error in
+            XCTAssert(error is TestError)
+            XCTAssertEqual(error as! TestError, TestError.fail2)
+            wait3.fulfill()
+        }
+
+        waitForExpectations(timeout: 0.1, handler: nil)
+    }
+
     // MARK: - Helpers
 
     func operation(value: Int = 42, completion: @escaping (Int) -> Void) {
@@ -281,6 +330,7 @@ class EventuallyTests: XCTestCase {
 
     enum TestError: Error {
         case fail
+        case fail2
     }
 
     func failingFuture() -> Future<Int> {

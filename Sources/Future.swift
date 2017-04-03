@@ -213,6 +213,29 @@ public final class Future<Value> {
         }
     }
 
+    /// Combines the successful result of one future with something that takes the successful result as a
+    /// parameter and returns another future
+    @discardableResult
+    public func combine<U>(with other: @escaping (Value) -> Future<U>) -> Future<U> {
+        let final = Future<U>()
+        then { result in
+            switch result {
+            case .success(let value):
+                other(value)
+                    .success { value in
+                        final.resolve(success: value)
+                    }
+                    .failure { error in
+                        final.resolve(error: error)
+                }
+            case .failure(let error):
+                final.resolve(error: error)
+            }
+
+        }
+        return final
+    }
+
     private func complete(with result: FutureResult<Value>) {
         guard !isCompleted else { return }
 
