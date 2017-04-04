@@ -47,7 +47,7 @@ calculateAge().success { (value: Int) in
 A non-closure based API for resolving futures is also available
 
 ```swift
-let future = Future<Int>
+let future = Future<Int>()
 future.success { value in
     ...
 }
