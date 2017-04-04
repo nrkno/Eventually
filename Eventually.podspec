@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Eventually"
-  s.version      = "0.3"
+  s.version      = "0.4"
   s.summary      = "SWift Future/Promise library"
   s.description  = <<-DESC
     A Swift Future/Promise library that can be used to model and transform asynchronous results
