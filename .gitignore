@@ -15,3 +15,5 @@ profile
 */xcuserdata/*
 
 docs/*
+
+*.playground/*.o
